@@ -1,0 +1,6 @@
+# Project exclude paths
+/jmx-agent/target/
+/jmx-browser/target/
+/jmx-exporter/target/
+/jmx-manager/target/
+/jmx-test/target/

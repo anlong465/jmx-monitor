@@ -1,0 +1,103 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: jmx-exporter
+  name: jmx-exporter
+  namespace: default
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: jmx-exporter
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: jmx-exporter
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: jmx-exporter
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+              weight: 100
+      containers:
+        - env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+            - name: CLUSTER_TYPE
+              value: OCP
+            - name: CLUSTER_NODES
+              value: worker1.sunrise.com,worker2.sunrise.com
+            - name: HOST_PORT
+              value: "5555"
+            - name: TZ
+              value: Asia/Shanghai
+            - name: JVMOPT
+              value: -Xms30m -Xmx60m
+          image: anlong1.sunrise.com:5000/jmx/jmx-exporter:3.22
+          imagePullPolicy: IfNotPresent
+          name: jmx-exporter
+          ports:
+            - containerPort: 8080
+              hostPort: 5555
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 220Mi
+            requests:
+              cpu: 100m
+              memory: 60Mi
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
+                - SYS_PTRACE
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /._/proc
+              name: host-proc
+            - mountPath: /._/var
+              name: host-var
+      dnsPolicy: ClusterFirst
+      hostIPC: true
+      hostPID: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - hostPath:
+            path: /proc
+            type: ""
+          name: host-proc
+        - hostPath:
+            path: /var
+            type: ""
+          name: host-var
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+

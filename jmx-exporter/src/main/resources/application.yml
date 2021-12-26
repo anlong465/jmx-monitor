@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: jmx-exporter
+
+logging.level.org.sunrise.jmx: info
+
+server:
+  port: 8080 #服务端口
