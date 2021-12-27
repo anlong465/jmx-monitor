@@ -142,9 +142,13 @@ public class JmxMaster extends JmxManager {
                     vmi.id = pid;
                     vmi.vmType = "Unknown";
 
-                    vmi.containerName = lines.get(1);
-                    vmi.namespace = "User_" + lines.get(3);
-                    vmi.podName = pid;
+                    if(isK8sPod) {
+                        fetchContainerInfo(vmi);
+                    } else {
+                        vmi.containerName = lines.get(1);
+                        vmi.namespace = "User_" + lines.get(3);
+                        vmi.podName = pid;
+                    }
 
                     vmi.setTmpdir(lines.get(0));
 

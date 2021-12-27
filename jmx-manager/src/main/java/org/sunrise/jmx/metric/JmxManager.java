@@ -38,7 +38,6 @@ public abstract class JmxManager implements Runnable {
 
         int pos = procName.indexOf('@');
         selfVmi.id = procName.substring(0, pos);
-        selfVmi.podName = selfVmi.id;
         if (vmType == null || vmType.length() == 0) {
             selfVmi.containerName = "jmx-exporter";
         } else {
@@ -49,6 +48,11 @@ public abstract class JmxManager implements Runnable {
             selfVmi.namespace = "User_" + System.getProperty("user.name");
             isK8sPod = false;
             JmxConstants.resetForPrimer();
+        }
+        if (isK8sPod) {
+            selfVmi.podName = procName.substring(pos + 1);
+        } else {
+            selfVmi.podName = selfVmi.id;
         }
         selfVmi.vmType = vmType;
 

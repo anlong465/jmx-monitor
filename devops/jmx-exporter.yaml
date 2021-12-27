@@ -44,16 +44,16 @@ spec:
                   apiVersion: v1
                   fieldPath: spec.nodeName
             - name: CLUSTER_TYPE
-              value: OCP
+              value:
             - name: CLUSTER_NODES
-              value: worker1.sunrise.com,worker2.sunrise.com
+              value:
             - name: HOST_PORT
               value: "5555"
             - name: TZ
               value: Asia/Shanghai
             - name: JVMOPT
-              value: -Xms30m -Xmx60m
-          image: anlong1.sunrise.com:5000/jmx/jmx-exporter:3.22
+              value: -Xms30m -Xmx160m
+          image: registry.kyligence.com:5000/jmx/jmx-exporter:1.1
           imagePullPolicy: IfNotPresent
           name: jmx-exporter
           ports:

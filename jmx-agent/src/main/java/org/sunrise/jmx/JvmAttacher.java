@@ -8,6 +8,7 @@ import org.sunrise.jmx.agent.JmxAgentRunnable;
 import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.util.Arrays;
 import java.util.List;
 
 public class JvmAttacher {
@@ -35,12 +36,12 @@ public class JvmAttacher {
             String nodeName = CommonUtil.getenv(new String[] {"_PAAS_NODE_NAME", "NODE_NAME"});
             String hostPort = CommonUtil.getenv(new String[] {"_PAAS_HOST_PORT", "HOST_PORT"}, "5555");
 
-            String[] cmds = {javaCmd, "-cp", cp, "org.sunrise.jmx.JvmAttacher",
-                    args[0], pid, nodeName, hostPort};
+            String[] cmds = {javaCmd, "-cp", cp, "org.sunrise.jmx.JvmAttacher", args[0], pid, nodeName, hostPort};
+            System.out.println(Arrays.toString(cmds));
             Runtime rt = Runtime.getRuntime();
             try {
                 rt.exec(cmds);
-            } catch (IOException e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
             }
         } else {
@@ -48,7 +49,7 @@ public class JvmAttacher {
         }
 
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (InterruptedException ignored) {}
 
         close();
@@ -116,7 +117,10 @@ public class JvmAttacher {
 
     private static void close() {
         try {
-            if (bos != null) bos.close();
+            if (bos != null) {
+                bos.flush();
+                bos.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,7 +135,7 @@ public class JvmAttacher {
         String pid = procName.substring(0, pos);
 
         bos = new BufferedOutputStream(
-                new FileOutputStream("/tmp/OpenJ9Attacher-" + pid + ".log"));
+                new FileOutputStream("/tmp/JmxAttacher-" + pid + ".log"));
         PrintStream ps = new PrintStream(bos);
         System.setOut(ps);
         System.setErr(ps);
