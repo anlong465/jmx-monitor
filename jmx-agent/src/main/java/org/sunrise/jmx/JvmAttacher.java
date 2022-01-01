@@ -40,17 +40,13 @@ public class JvmAttacher {
             System.out.println(Arrays.toString(cmds));
             Runtime rt = Runtime.getRuntime();
             try {
-                rt.exec(cmds);
+                rt.exec(cmds).waitFor();
             } catch (Throwable e) {
                 e.printStackTrace();
             }
         } else {
             prepare(args[0], args[1], pid, args[2], args[3]);
         }
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ignored) {}
 
         close();
     }
@@ -135,7 +131,7 @@ public class JvmAttacher {
         String pid = procName.substring(0, pos);
 
         bos = new BufferedOutputStream(
-                new FileOutputStream("/tmp/JmxAttacher-" + pid + ".log"));
+                new FileOutputStream("/tmp/JvmAttacher-" + pid + ".log"));
         PrintStream ps = new PrintStream(bos);
         System.setOut(ps);
         System.setErr(ps);
