@@ -28,7 +28,7 @@ public class ApiCallStatMetricCollector extends MBeanMetricCollector {
                 //test1: 429, 71478179356, 42, 2083342
                 for(String item : items) {
                     item = item.trim();
-                    int pos = item.indexOf(":");
+                    int pos = item.lastIndexOf(":");
                     String apiId = item.substring(0, pos);
                     String[] metrics = item.substring(pos + 1).split(",");
                     ApiCallStatPair pair = getApiCallStatPair(apiId);
