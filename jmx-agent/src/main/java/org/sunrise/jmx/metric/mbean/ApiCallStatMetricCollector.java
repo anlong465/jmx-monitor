@@ -46,8 +46,8 @@ public class ApiCallStatMetricCollector extends MBeanMetricCollector {
 
                     addGuageMetric(prefix + "good_count", pair.latest.goodCount - pair.previous.goodCount);
                     addGuageMetric(prefix + "bad_count", pair.latest.badCount - pair.previous.badCount);
-                    addGuageMetric(prefix + "good_ms", (pair.latest.goodNano - pair.previous.goodNano)/1000000);
-                    addGuageMetric(prefix + "bad_ms", (pair.latest.badNano - pair.previous.badNano)/1000000);
+                    addGuageMetric(prefix + "good_ms", (pair.latest.goodUs - pair.previous.goodUs)/1000);
+                    addGuageMetric(prefix + "bad_ms", (pair.latest.badUs - pair.previous.badUs)/1000);
                 } else {
                     callStats.remove(i);
                 }
@@ -65,9 +65,9 @@ public class ApiCallStatMetricCollector extends MBeanMetricCollector {
 
     private static class ApiCallStat {
         public long goodCount = 0;
-        public long goodNano = 0;
+        public long goodUs = 0;
         public long badCount = 0;
-        public long badNano = 0;
+        public long badUs = 0;
     }
 
     private static class ApiCallStatPair {
@@ -79,15 +79,15 @@ public class ApiCallStatMetricCollector extends MBeanMetricCollector {
         public ApiCallStat latest = new ApiCallStat();
         private int ttl = 10;
 
-        public void record(long goodCount, long goodNano, long badCount, long badNano) {
+        public void record(long goodCount, long goodUs, long badCount, long badUs) {
             ApiCallStat prev = this.previous;
             this.previous = this.latest;
             this.latest = prev;
 
             this.latest.goodCount = goodCount;
-            this.latest.goodNano = goodNano;
+            this.latest.goodUs = goodUs;
             this.latest.badCount = badCount;
-            this.latest.badNano = badNano;
+            this.latest.badUs = badUs;
             ttl = 10;
         }
     }
