@@ -51,9 +51,12 @@ public class JmxAgentRunnable implements Runnable {
                         nextMetricTime = JmxMetricPusher.pushMetrics(jmxServerUrl, auth, selfId, metrics);
                     }
                     MetricTimer.setNextMetricTime(nextMetricTime);
+                } else {
+                    MetricTimer.resetNextMetricTime();
                 }
             } catch (Throwable th) {
-                th.printStackTrace();
+                MetricTimer.resetNextMetricTime();
+                CommonUtil.logException(th);
             }
 
 //            long toSleep = MetricTimer.getNextMetricCollectTime() - System.currentTimeMillis();
@@ -63,7 +66,6 @@ public class JmxAgentRunnable implements Runnable {
                 try {
                     Thread.sleep(toSleep);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         }

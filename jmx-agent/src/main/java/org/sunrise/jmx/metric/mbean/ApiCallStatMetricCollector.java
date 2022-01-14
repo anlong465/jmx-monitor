@@ -1,5 +1,7 @@
 package org.sunrise.jmx.metric.mbean;
 
+import org.sunrise.jmx.agent.CommonUtil;
+
 import javax.management.*;
 import java.util.*;
 
@@ -54,12 +56,8 @@ public class ApiCallStatMetricCollector extends MBeanMetricCollector {
             }
         } catch (InstanceNotFoundException e) {
 //            e.printStackTrace();
-        } catch (MBeanException e) {
-            e.printStackTrace();
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-        } catch (AttributeNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            CommonUtil.logException(e);
         }
     }
 

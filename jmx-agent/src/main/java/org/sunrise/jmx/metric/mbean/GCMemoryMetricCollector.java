@@ -57,9 +57,8 @@ public class GCMemoryMetricCollector  extends MBeanMetricCollector {
                         processLastGC(usageBeforeGc, (TabularData) lastGC.get(key), "beforeGc");
                     }
                 }
-
             } catch (Exception e) {
-                e.printStackTrace();
+                CommonUtil.logException(e);
             }
         }
         addGuageMetric("jvm_heap_mp_afterGc_used_mb", CommonUtil.bytes2MB(usageAfterGc.heapMemoryUsed));
@@ -158,7 +157,7 @@ public class GCMemoryMetricCollector  extends MBeanMetricCollector {
             return true;
         } catch (AttributeNotFoundException e) {
         } catch (Exception e) {
-            e.printStackTrace();
+            CommonUtil.logException(e);
         }
         return false;
     }

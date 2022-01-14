@@ -18,7 +18,7 @@ public class JmxMetricPusher {
                 result = uploadToSvr(jmxServerUrl, auth, selfId, metrics);
                 if (uploadToSvrCount != 3) uploadToSvrCount = 3;
             } catch (Throwable e) {
-                e.printStackTrace();
+                CommonUtil.logException(e);
                 if (JmxAgentRunnable.isInitiatedByServer()) {
                     uploadToSvrCount--;
                     result = saveToLocalFile(selfId, metrics);

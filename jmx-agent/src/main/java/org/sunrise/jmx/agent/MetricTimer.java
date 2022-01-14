@@ -6,11 +6,15 @@ public class MetricTimer {
     public static long METRICS_INTERNAL_MS = 30L*1000;
     public static long nextMetricTime = 0;
 
-    public static synchronized long getNextMetricTime() {
+    public static long getNextMetricTime() {
         if (nextMetricTime == 0) {
             nextMetricTime = System.currentTimeMillis() + METRICS_INTERNAL_MS;
         }
         return nextMetricTime;
+    }
+
+    public static void resetNextMetricTime() {
+        nextMetricTime = System.currentTimeMillis() + METRICS_INTERNAL_MS;
     }
 
     public static void setNextMetricTime(long next) {

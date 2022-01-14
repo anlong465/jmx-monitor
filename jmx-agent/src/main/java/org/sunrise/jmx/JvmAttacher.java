@@ -107,7 +107,6 @@ public class JvmAttacher {
         try {
             if (bos != null) bos.flush();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -118,7 +117,6 @@ public class JvmAttacher {
                 bos.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

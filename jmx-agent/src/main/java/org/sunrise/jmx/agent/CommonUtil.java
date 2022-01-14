@@ -1,5 +1,9 @@
 package org.sunrise.jmx.agent;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Properties;
@@ -78,5 +82,29 @@ public class CommonUtil {
     public static double ms2Second(double milliseconds) {
         BigDecimal b = new BigDecimal( milliseconds/1000);
         return b.setScale(3, RoundingMode.HALF_EVEN).doubleValue();
+    }
+
+    public static void logException(Throwable th) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        th.printStackTrace(pw);
+        String exception = sw.toString();
+
+        String errorId = Long.toHexString((long)exception.hashCode());
+        String errorFileName = errorId + "-error.txt";
+
+        String tmpdir = System.getProperty("java.io.tmpdir");
+        if (tmpdir == null) tmpdir = "/tmp";
+        File f = new File(tmpdir, errorFileName);
+        if (f.exists()) {
+            System.out.println("Repeated error: " + th.getMessage() + ". Please refer to " + f.getAbsolutePath());
+        } else {
+            try {
+                System.out.println(exception);
+                FileUtil.writeContent(f, exception);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }
