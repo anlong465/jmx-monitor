@@ -104,6 +104,7 @@ public class JmxAgentRunnable implements Runnable {
             FileUtil.writeContent(f, tmpdir + "\n" + javaCmd + "\n" + pid +
                     "\n" + System.getProperty("user.name"));
             System.out.println("makePidFile: " + f);
+            f.deleteOnExit();
         } catch (IOException e) {
             throw new RuntimeException("Failed to prepare pidFile", e);
         }

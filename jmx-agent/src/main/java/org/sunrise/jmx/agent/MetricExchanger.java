@@ -8,7 +8,9 @@ public class MetricExchanger {
     private MetricExchanger(String root, String fileNameToWrite, String fileNameToRead) {
 //        System.out.println("MetricExchanger --> root: " + root);
         fileToWrite = new File(root, fileNameToWrite);
+        fileToWrite.deleteOnExit();
         fileToRead = new File(root, fileNameToRead);
+        fileToRead.deleteOnExit();
     }
 
     public String writeRead(String content) throws IOException {
