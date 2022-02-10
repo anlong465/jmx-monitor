@@ -130,7 +130,6 @@ public class JmxMaster extends JmxManager {
             pidFile = FileUtils.findFile(procRoot, pidFileName);
         }
 
-//        logger.info(pidFileName + ": " + "pidFile:" + pidFile);
         if (pidFile != null) {
             try {
                 List<String> lines = FileUtils.readFileLines(pidFile.getAbsolutePath());
@@ -165,7 +164,7 @@ public class JmxMaster extends JmxManager {
             }
         }
 
-        logger.error("Failed to fetch VMInfo for {}.", pidFileName);
+        logger.warn("Failed to fetch VMInfo for {}.", pidFileName);
 
         return null;
     }

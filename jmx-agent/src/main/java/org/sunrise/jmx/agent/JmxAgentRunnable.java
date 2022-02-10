@@ -1,5 +1,7 @@
 package org.sunrise.jmx.agent;
 
+import org.sunrise.jmx.FileCleanHook;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -36,6 +38,7 @@ public class JmxAgentRunnable implements Runnable {
         System.out.println("selfId: " + selfId + ", --> " + this.selfId);
         System.out.println("sleepMS: " + sleepMS);
         System.out.println("jmxServerUrl: " + jmxServerUrl);
+        FileCleanHook.init();
     }
 
     public void run() {
@@ -104,12 +107,11 @@ public class JmxAgentRunnable implements Runnable {
             FileUtil.writeContent(f, tmpdir + "\n" + javaCmd + "\n" + pid +
                     "\n" + System.getProperty("user.name"));
             System.out.println("makePidFile: " + f);
-            f.deleteOnExit();
+            FileCleanHook.add(f);
         } catch (IOException e) {
             throw new RuntimeException("Failed to prepare pidFile", e);
         }
     }
-
 
     public static Thread getDefaultAgent(String hostPort) {
         String jmxServerUrl = getDefaultJmxServerUrl(null, hostPort);

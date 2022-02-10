@@ -1,6 +1,7 @@
 package org.sunrise.jmx.metric;
 
 import com.sun.tools.attach.*;
+import org.sunrise.jmx.FileCleanHook;
 import org.sunrise.jmx.agent.JmxMetricCollector;
 import org.sunrise.jmx.agent.MetricTimer;
 import org.sunrise.k8s.K8sPodMgr;
@@ -63,6 +64,7 @@ public abstract class JmxManager implements Runnable {
         MetricTimer.setSinglePull(System.getenv("SINGLE_PULL"));
 
         agentArgs = selfVmi.id + " " + MetricTimer.METRICS_INTERNAL_MS + " ";
+        FileCleanHook.init();
     }
 
 

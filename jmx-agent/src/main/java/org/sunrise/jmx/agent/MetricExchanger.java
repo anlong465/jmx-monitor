@@ -1,5 +1,7 @@
 package org.sunrise.jmx.agent;
 
+import org.sunrise.jmx.FileCleanHook;
+
 import java.io.*;
 
 public class MetricExchanger {
@@ -7,10 +9,15 @@ public class MetricExchanger {
     private File fileToRead;
     private MetricExchanger(String root, String fileNameToWrite, String fileNameToRead) {
 //        System.out.println("MetricExchanger --> root: " + root);
-        fileToWrite = new File(root, fileNameToWrite);
-        fileToWrite.deleteOnExit();
-        fileToRead = new File(root, fileNameToRead);
-        fileToRead.deleteOnExit();
+        try {
+            fileToWrite = new File(root, fileNameToWrite).getCanonicalFile();
+            fileToRead = new File(root, fileNameToRead).getCanonicalFile();
+
+            FileCleanHook.add(fileToWrite);
+            FileCleanHook.add(fileToRead);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String writeRead(String content) throws IOException {
@@ -27,6 +34,11 @@ public class MetricExchanger {
             fileToRead = new File(fileToRead.getAbsolutePath());
             return FileUtil.readContent(fileToRead);
         }
+    }
+
+    public void close() {
+        FileCleanHook.delete(fileToWrite);
+        FileCleanHook.delete(fileToRead);
     }
 
     public static MetricExchanger makeExchangerForClientToServer(String selfId) {

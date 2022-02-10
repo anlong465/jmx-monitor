@@ -27,7 +27,12 @@ public class VMInfo {
     }
 
     public boolean isRemovable() {
-        return (--age < 0);
+        if (--age < 0) {
+            if (exchanger != null) exchanger.close();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setTmpdir(String tmpdir) {
