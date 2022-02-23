@@ -30,10 +30,7 @@ public class ThreadPoolExecutorMetricsMonitor extends ThreadPoolMetricsMonitor {
 
     @Override
     public boolean isActive() {
-        if (pool.isShutdown() || pool.isTerminated() || pool.isTerminating()) {
-            return false;
-        }
-        return true;
+        return !pool.isShutdown() && !pool.isTerminated() && !pool.isTerminating();
     }
 
     public static ThreadPoolExecutorMetricsMonitor monitorSingleThreadExecutor(String id, ExecutorService single)

@@ -11,7 +11,7 @@ import java.lang.management.RuntimeMXBean;
 import java.util.*;
 
 public class JmxBrowser {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
         String procName = runtime.getName(); // format: "pid@hostname"
 

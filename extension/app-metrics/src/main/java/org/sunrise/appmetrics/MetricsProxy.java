@@ -37,7 +37,7 @@ public class MetricsProxy implements MetricsProxyMBean {
         }
     }
 
-    private List<MetricsMonitor> deadList = new ArrayList<MetricsMonitor>();
+    private final List<MetricsMonitor> deadList = new ArrayList<MetricsMonitor>();
     public Map<String, Number>[] getMetrics() {
         Map<String, Number>[] results = new Map[] {
                 new HashMap<String, Number>(),

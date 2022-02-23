@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileCleanHook implements Runnable {
-    private static List<String> toDeleteFiles = new ArrayList<String>();
+    private static final List<String> toDeleteFiles = new ArrayList<String>();
 
     public static void add(String path) {
         if (path != null && !toDeleteFiles.contains(path)) {
