@@ -1,6 +1,8 @@
 package org.sunrise.jmx.metric.mbean;
 
-import javax.management.*;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
 
 public class WebSphereDatasourceMetricCollector extends DatasourceMetricCollector {
     public WebSphereDatasourceMetricCollector() throws MalformedObjectNameException {

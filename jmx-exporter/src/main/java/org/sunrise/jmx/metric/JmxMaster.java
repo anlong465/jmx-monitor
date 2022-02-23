@@ -12,8 +12,8 @@ import org.sunrise.jmx.agent.MetricTimer;
 import org.sunrise.jmx.metric.storage.MetricsFactory;
 import org.sunrise.jmx.server.svc.NodePrometheusCollector;
 import org.sunrise.k8s.ContainerMgr;
-import org.sunrise.k8s.K8sContainerMgr;
 import org.sunrise.k8s.K8s1v5ContainerMgr;
+import org.sunrise.k8s.K8sContainerMgr;
 import org.sunrise.k8s.OcpContainerMgr;
 
 import java.io.File;

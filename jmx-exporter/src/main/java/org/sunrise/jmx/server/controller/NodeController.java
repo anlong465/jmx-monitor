@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.sunrise.jmx.metric.JmxMaster;
 import org.sunrise.jmx.agent.MetricTimer;
+import org.sunrise.jmx.metric.JmxMaster;
 import org.sunrise.jmx.metric.VMInfo;
 import org.sunrise.jmx.server.svc.ClusterNodes;
 

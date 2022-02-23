@@ -1,7 +1,7 @@
 package org.sunrise.jmx.metric.storage;
 
-import org.sunrise.jmx.metric.JmxConstants;
 import org.sunrise.jmx.agent.MetricTimer;
+import org.sunrise.jmx.metric.JmxConstants;
 
 import java.io.File;
 import java.io.IOException;

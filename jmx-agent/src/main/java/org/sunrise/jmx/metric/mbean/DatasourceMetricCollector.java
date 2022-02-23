@@ -1,7 +1,6 @@
 package org.sunrise.jmx.metric.mbean;
 
 import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 public abstract class DatasourceMetricCollector extends MBeanMetricCollector {

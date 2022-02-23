@@ -2,7 +2,9 @@ package org.sunrise.jmx.agent;
 
 import org.sunrise.jmx.FileCleanHook;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class MetricExchanger {
     private File fileToWrite;

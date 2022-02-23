@@ -1,13 +1,13 @@
 package org.sunrise.jmx.server;
 
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.sunrise.jmx.metric.JmxMaster;
 import org.sunrise.jmx.server.svc.ClusterNodes;
+
+import java.io.IOException;
 
 @SpringBootApplication
 public class AppMain {

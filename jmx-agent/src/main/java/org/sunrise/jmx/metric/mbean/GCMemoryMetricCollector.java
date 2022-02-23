@@ -4,7 +4,10 @@ import org.sunrise.jmx.agent.CommonUtil;
 import org.sunrise.jmx.metric.JVMGCCollector;
 import org.sunrise.jmx.metric.JVMMemoryCollector;
 
-import javax.management.*;
+import javax.management.AttributeNotFoundException;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.CompositeType;
 import javax.management.openmbean.TabularData;

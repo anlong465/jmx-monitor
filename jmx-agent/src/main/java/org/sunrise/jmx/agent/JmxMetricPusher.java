@@ -1,11 +1,8 @@
 package org.sunrise.jmx.agent;
 
 import java.io.*;
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.UUID;
 
 public class JmxMetricPusher {
     protected static int uploadToSvrCount = 3;
