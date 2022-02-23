@@ -4,10 +4,14 @@ import org.sunrise.appmetrics.Metric;
 import org.sunrise.appmetrics.MetricsMonitor;
 import org.sunrise.appmetrics.MetricsProxy;
 
+import java.lang.reflect.Method;
+
 public class ApiCallStatMetricsMonitor extends MetricsMonitor {
     private final static String METRICS_TYPE = "apistat";
 
     private final ApiCallStat stat = new ApiCallStat();
+    private ApiResultChecker resultChecker = null;
+    private boolean ready = false;
     private ApiCallStatMetricsMonitor(String id) {
         super(METRICS_TYPE, id);
     }
@@ -16,9 +20,24 @@ public class ApiCallStatMetricsMonitor extends MetricsMonitor {
     public boolean isActive() {
         return stat.isActive();
     }
-    public void callBegin() {
+
+    public void callBegin(Method method, String checkSuccessRule) {
         stat.callBegin();
+
+        if (ready) return;
+        synchronized (this) {
+            if (ready) return;
+            try {
+                ready = true;
+                if (checkSuccessRule != null && checkSuccessRule.trim().length() > 0) {
+                    this.resultChecker = new ApiResultChecker(method, checkSuccessRule.trim());
+                }
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
     public void callEndWithBadMs(long ms) {
         stat.callEndWithBadMs(ms);
@@ -26,6 +45,18 @@ public class ApiCallStatMetricsMonitor extends MetricsMonitor {
 
     public void callEndWithGoodMs(long ms) {
         stat.callEndWithGoodMs(ms);
+    }
+
+    public void callEndWithMs(Object ret, Throwable th, long ms) {
+        try {
+            if (th == null && (resultChecker == null || resultChecker.isResultSuccess(ret))) {
+                callEndWithGoodMs(ms);
+            } else {
+                callEndWithBadMs(ms);
+            }
+        } catch (Throwable ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @Override

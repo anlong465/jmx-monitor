@@ -2,7 +2,6 @@ package org.sunrise.appmetrics.threadpool;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class ThreadPoolExecutorMetricsMonitor extends ThreadPoolMetricsMonitor {
@@ -10,7 +9,6 @@ public class ThreadPoolExecutorMetricsMonitor extends ThreadPoolMetricsMonitor {
     public ThreadPoolExecutorMetricsMonitor(String id, ThreadPoolExecutor pool) {
         super(id);
         this.pool = pool;
-        Executors.newSingleThreadExecutor();
     }
 
     @Override
