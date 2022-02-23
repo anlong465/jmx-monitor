@@ -9,7 +9,7 @@ import javax.management.ObjectName;
 import java.util.Map;
 
 public class ProxyMetricCollector extends MBeanMetricCollector {
-    public ProxyMetricCollector(ObjectName id) throws MalformedObjectNameException {
+    public ProxyMetricCollector() throws MalformedObjectNameException {
         super(new ObjectName("org.sunrise.metrics:type=Proxy"));
     }
 

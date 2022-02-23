@@ -16,6 +16,17 @@ public class ApiCallStatMetricsMonitor extends MetricsMonitor {
     public boolean isActive() {
         return stat.isActive();
     }
+    public void callBegin() {
+        stat.callBegin();
+    }
+
+    public void callEndWithBadMs(long ms) {
+        stat.callEndWithBadMs(ms);
+    }
+
+    public void callEndWithGoodMs(long ms) {
+        stat.callEndWithGoodMs(ms);
+    }
 
     @Override
     public Metric.Guage[] getGuageMetrics() {
@@ -32,43 +43,43 @@ public class ApiCallStatMetricsMonitor extends MetricsMonitor {
                     return stat.runningNum.get();
                 }
             },
-            new Metric.CounterToGuage() {
+            new Metric.LongCounterToGuage() {
                 @Override
                 public String getMetricName() {
                     return "good_count";
                 }
                 @Override
-                public Number getCounter() {
+                public Long getCounter() {
                     return stat.good.countSum;
                 }
             },
-            new Metric.CounterToGuage() {
+            new Metric.LongCounterToGuage() {
                 @Override
                 public String getMetricName() {
                     return "good_ms";
                 }
                 @Override
-                public Number getCounter() {
+                public Long getCounter() {
                     return stat.good.durationMsSum;
                 }
             },
-            new Metric.CounterToGuage() {
+            new Metric.LongCounterToGuage() {
                 @Override
                 public String getMetricName() {
                     return "bad_count";
                 }
                 @Override
-                public Number getCounter() {
+                public Long getCounter() {
                     return stat.bad.countSum;
                 }
             },
-            new Metric.CounterToGuage() {
+            new Metric.LongCounterToGuage() {
                 @Override
                 public String getMetricName() {
                     return "bad_ms";
                 }
                 @Override
-                public Number getCounter() {
+                public Long getCounter() {
                     return stat.bad.durationMsSum;
                 }
             }

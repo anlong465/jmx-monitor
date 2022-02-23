@@ -50,6 +50,7 @@ public class JmxMetricCollector {
                     new DruidDatasourceMetricCollector(),
                     new TomcatDatasourceMetricCollector(),
                     new GCMemoryMetricCollector(),
+                    new ProxyMetricCollector(),
                     new ApiCallStatMetricCollector()
             };
         } catch (MalformedObjectNameException e) {
