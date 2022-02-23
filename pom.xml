@@ -13,8 +13,10 @@
         <module>jmx-agent</module>
         <module>jmx-exporter</module>
         <module>jmx-manager</module>
-        <module>jmx-browser</module>
-        <module>jmx-test</module>
+        <module>extension/jmx-browser</module>
+        <module>extension/app-metrics</module>
+        <module>extension/app-metrics-threadpool</module>
+        <module>extension/app-metrics-apistat</module>
     </modules>
 
     <parent>
@@ -22,18 +24,5 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.2.RELEASE</version>
     </parent>
-
-    <!--
-        <dependencies>
-            <dependency>
-                <groupId>com.sun</groupId>
-                <artifactId>tools</artifactId>
-                <version>1.7.0</version>
-                <scope>system</scope>
-                <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
-                <optional>true</optional>
-            </dependency>
-        </dependencies>
-    -->
 
 </project>

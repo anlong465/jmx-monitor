@@ -35,7 +35,10 @@ public class FileCleanHook implements Runnable {
         }
 
         synchronized (toDeleteFiles) {
-            toDeleteFiles.remove(f.getAbsolutePath());
+            try {
+                toDeleteFiles.remove(f.getCanonicalPath());
+            } catch (IOException e) {
+            }
         }
     }
 

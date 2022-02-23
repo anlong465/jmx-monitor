@@ -11,10 +11,10 @@ public class MetricExchanger {
 //        System.out.println("MetricExchanger --> root: " + root);
         try {
             fileToWrite = new File(root, fileNameToWrite).getCanonicalFile();
-            fileToRead = new File(root, fileNameToRead).getCanonicalFile();
+            fileToRead = new File(root, fileNameToRead);
 
             FileCleanHook.add(fileToWrite);
-            FileCleanHook.add(fileToRead);
+//            FileCleanHook.add(fileToRead);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -38,7 +38,7 @@ public class MetricExchanger {
 
     public void close() {
         FileCleanHook.delete(fileToWrite);
-        FileCleanHook.delete(fileToRead);
+//        FileCleanHook.delete(fileToRead);
     }
 
     public static MetricExchanger makeExchangerForClientToServer(String selfId) {

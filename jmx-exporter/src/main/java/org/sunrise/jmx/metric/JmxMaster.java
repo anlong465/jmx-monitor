@@ -126,7 +126,7 @@ public class JmxMaster extends JmxManager {
             }
         } else {
             File procRoot = new File("/", pidFileParent);
-            logger.info(pidFileName + ": " + procRoot.getAbsolutePath());
+            logger.debug(pidFileName + ": " + procRoot.getAbsolutePath());
             pidFile = FileUtils.findFile(procRoot, pidFileName);
         }
 
@@ -152,12 +152,12 @@ public class JmxMaster extends JmxManager {
                     vmi.setTmpdir(lines.get(0));
 
                     allVms.add(vmi);
-                    logger.info("allVms.size()=" + allVms.size());
+                    logger.debug("allVms.size()=" + allVms.size());
                 }
                 vmi.pidFileName = pidFileName;
 
                 pidFile.delete();
-                logger.info("Delete pidFile: " + pidFile);
+                logger.debug("Delete pidFile: " + pidFile);
                 return vmi;
             } catch (Throwable e) {
                 e.printStackTrace();

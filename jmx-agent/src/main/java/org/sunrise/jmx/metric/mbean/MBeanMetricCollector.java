@@ -34,7 +34,7 @@ public abstract class MBeanMetricCollector {
         guageMap.put(key, value);
     }
 
-    protected void addCounterMapMetric(String key, Number value) {
+    protected void addCounterMetric(String key, Number value) {
         counterMap.put(key, value);
     }
 

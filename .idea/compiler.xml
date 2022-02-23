@@ -6,16 +6,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="jmx-test" />
+        <module name="app-metrics" />
+        <module name="app-metrics-apistat" />
+        <module name="app-metrics-threadpool" />
         <module name="jmx-manager" />
         <module name="jmx-agent" />
         <module name="jmx-exporter" />
         <module name="jmx-browser" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="jmx-test" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="app-metrics" options="-parameters" />
+      <module name="app-metrics-apistat" options="-parameters" />
+      <module name="app-metrics-threadpool" options="-parameters" />
       <module name="jmx-agent" options="-parameters" />
       <module name="jmx-browser" options="-parameters" />
       <module name="jmx-exporter" options="-parameters" />
