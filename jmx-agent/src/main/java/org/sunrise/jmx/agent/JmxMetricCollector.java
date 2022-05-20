@@ -11,6 +11,7 @@ import javax.management.MalformedObjectNameException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +58,25 @@ public class JmxMetricCollector {
             dumpException(e);
         }
     }
+    private static MBeanMetricCollector getJDKMetricCollector(String jdkClassName, String metricCollectorClassName) {
+        try {
+            Class.forName(jdkClassName);
+
+            try {
+                Class clazz = Class.forName(metricCollectorClassName);
+                Constructor<?> constructor = clazz.getDeclaredConstructor(null);
+                return (MBeanMetricCollector) constructor.newInstance(null);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException e) {
+        }
+
+        return null;
+    }
+    private static MBeanMetricCollector jdk7MetricCollector = getJDKMetricCollector(
+            "java.lang.management.BufferPoolMXBean",
+            "org.sunrise.jmx.agent.jdk7.JDK7MetricCollector");
 
     public static Map<String, Map<String, Number>> getJVMMetric() {
         Map<String, Map<String, Number>> result = new HashMap<String, Map<String, Number>>();
@@ -70,6 +90,7 @@ public class JmxMetricCollector {
         JVMGCCollector.getGCMetrics(guageMap);
         JVMThreadCollector.getGCMetrics(guageMap, counterMap);
         JVMClassLoadingCollector.getGCMetrics(guageMap, counterMap);
+        if (jdk7MetricCollector != null) jdk7MetricCollector.process(null, guageMap, counterMap);
 
         if (tryMBeanCount > 0) {
 //            NanoTimeWatcher watcher = new NanoTimeWatcher();

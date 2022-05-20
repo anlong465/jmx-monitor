@@ -17,6 +17,8 @@
         <module>extension/app-metrics</module>
         <module>extension/app-metrics-threadpool</module>
         <module>extension/app-metrics-apistat</module>
+        <module>jdk7-jmx-agent</module>
+        <module>jmx-agent-assembly</module>
     </modules>
 
     <parent>
