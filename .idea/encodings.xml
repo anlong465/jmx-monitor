@@ -5,6 +5,8 @@
     <file url="file://$PROJECT_DIR$/extension/app-metrics-threadpool/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/extension/app-metrics/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/extension/jmx-browser/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jdk7-jmx-agent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jmx-agent-assembly/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jmx-agent/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jmx-exporter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jmx-exporter/src/main/resources" charset="UTF-8" />
