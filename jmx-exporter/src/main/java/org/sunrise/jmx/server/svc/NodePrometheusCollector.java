@@ -143,15 +143,25 @@ public class NodePrometheusCollector {
             int pos = keyName.lastIndexOf(' ');
             if (pos > 0) {
                 name = keyName.substring(pos + 1).trim();
-                this.labelsName = new ArrayList<>();
-                this.labelsValue = new ArrayList<>();
-                this.labelsName.addAll(labelsName);
-                this.labelsValue.addAll(labelsValue);
+                this.labelsName = new ArrayList<>(labelsName);
+                this.labelsValue = new ArrayList<>(labelsValue);
 
                 String labelNameValue = keyName.substring(0, pos).trim();
+
                 pos = labelNameValue.indexOf(' ');
                 this.labelsName.add(labelNameValue.substring(0, pos).trim());
-                this.labelsValue.add(labelNameValue.substring(pos + 1).trim());
+
+                labelNameValue = labelNameValue.substring(pos + 1).trim();
+                String[] items = labelNameValue.split(",");
+                this.labelsValue.add(items[0]);
+
+                int len = items.length;
+                if (len > 1) {
+                    for(int i = 1; i < len - 1; i++) {
+                        this.labelsName.add(items[i]);
+                        this.labelsValue.add(items[++i]);
+                    }
+                }
             } else {
                 name = keyName;
                 this.labelsValue = labelsValue;

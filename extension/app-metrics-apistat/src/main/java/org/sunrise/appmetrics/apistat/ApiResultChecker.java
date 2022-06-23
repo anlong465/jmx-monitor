@@ -7,11 +7,12 @@ public class ApiResultChecker {
     protected ValueGetter getter = null;
     protected ValueChecker checker = null;
 
-    public ApiResultChecker(Method method, String checkSuccessRule) throws NoSuchFieldException, NoSuchMethodException {
+    public ApiResultChecker(Method method, String checkSuccessRule) throws NoSuchFieldException, NoSuchMethodException, ClassNotFoundException {
         this(method.getReturnType(), checkSuccessRule);
     }
 
-    private ApiResultChecker(Class<?> methodReturnType, String checkSuccessRule) throws NoSuchMethodException, NoSuchFieldException {
+    private ApiResultChecker(Class<?> methodReturnType, String checkSuccessRule) throws NoSuchMethodException, NoSuchFieldException, ClassNotFoundException {
+        ClassLoader ctxClassLoader = methodReturnType.getClassLoader();
         ComparedResultCheckCase caseChecker = null;
         String valueGetterStr = null;
         String toCompareStr = null;
@@ -69,28 +70,59 @@ public class ApiResultChecker {
         if (valueGetterStr == null || valueGetterStr.trim().length() == 0) {
             this.getter = generalValueGetter;
             toCompareValueClass = methodReturnType;
-        } else if ((pos = valueGetterStr.indexOf('(')) > 0) {
-            String valueMethodName = valueGetterStr.substring(0, pos);
-            Method m = methodReturnType.getMethod(valueMethodName);
-            toCompareValueClass = m.getReturnType();
-            this.getter = new MethodValueGetter(m);
         } else {
-            Field f = methodReturnType.getField(valueGetterStr);
-            toCompareValueClass = f.getType();
-            this.getter = new FieldValueGetter(f);
+            String[] items = valueGetterStr.split(" ");
+            ValueGetter[] getters = new ValueGetter[items.length];
+
+            for(int i = 0; i < items.length; i++) {
+                String item = items[i];
+                String resultType = null;
+                if (item.charAt(0) =='(') {
+                    pos = item.indexOf(')');
+                    resultType = item.substring(1, pos);
+                    item = item.substring(pos + 1).trim();
+                }
+                if ((pos = item.indexOf('(')) > 0) {
+                    String valueMethodName = item.substring(0, pos);
+                    Method m;
+                    try {
+                        m = methodReturnType.getMethod(valueMethodName);
+                    } catch (NoSuchMethodException nsm) {
+                        m = methodReturnType.getDeclaredMethod(valueMethodName);
+                    }
+                    m.setAccessible(true);
+                    toCompareValueClass = m.getReturnType();
+                    getters[i] = new MethodValueGetter(m);
+                } else {
+                    Field f;
+                    try {
+                        f = methodReturnType.getField(valueGetterStr);
+                    } catch (NoSuchFieldException nsf) {
+                        f = methodReturnType.getDeclaredField(valueGetterStr);
+                    }
+                    f.setAccessible(true);
+                    toCompareValueClass = f.getType();
+                    getters[i] = new FieldValueGetter(f);
+                }
+                methodReturnType = (resultType == null) ? toCompareValueClass :
+                        Class.forName(resultType, false, ctxClassLoader);
+
+            }
+
+            this.getter = (items.length == 1) ? getters[0] : new ValueGetterChain(getters);
         }
 
         if (toCompareStr != null) {
             if (toCompareValueClass == String.class) {
                 this.checker = new ComparableValueChecker<String>(toCompareStr, caseChecker);
             } else
-            if (toCompareValueClass == Integer.class) {
+            if (toCompareValueClass == Integer.class || toCompareValueClass.toString().equals("int")) {
                 this.checker = new ComparableValueChecker<Integer>(Integer.parseInt(toCompareStr), caseChecker);
             } else
             if (toCompareValueClass == Long.class || toCompareValueClass.toString().equals("long")) {
                 this.checker = new ComparableValueChecker<Long>(Long.parseLong(toCompareStr), caseChecker);
             } else
-            if (toCompareValueClass == Boolean.class) {
+            if (toCompareValueClass == Boolean.class || toCompareValueClass.toString().equals("boolean")) {
                 this.checker = new ComparableValueChecker<Boolean>(Boolean.parseBoolean(toCompareStr), caseChecker);
             } else {
                 throw new RuntimeException("Unsupported type: " + toCompareValueClass.getName());
@@ -178,6 +210,19 @@ public class ApiResultChecker {
 
     private static class ValueGetter {
         public Object getValue(Object result) throws Exception {
+            return result;
+        }
+    }
+
+    private static class ValueGetterChain extends ValueGetter {
+        private final ValueGetter[] getters;
+        public ValueGetterChain(ValueGetter[] getters) {
+            this.getters = getters;
+        }
+        public Object getValue(Object result) throws Exception {
+            for(int i = 0; i < getters.length; i++) {
+                result = getters[i].getValue(result);
+            }
             return result;
         }
     }
