@@ -76,7 +76,7 @@ public abstract class JmxManager implements Runnable {
 //            System.out.println(vmd);
 
             if (vmd.id().equals(selfVmi.id)) {
-                String selfMetrics = JmxMetricCollector.getJVMMetricAsJsonString();
+                String selfMetrics = JmxMetricCollector.getJVMMetricAsJsonString(JmxConstants.NODE_PROC);
                 selfVmi.setMetrics(selfMetrics);
 //                saveMetrics(selfVmi, selfMetrics);
                 continue;

@@ -18,12 +18,21 @@ public class JDK7MetricCollector extends MBeanMetricCollector {
     @Override
     protected void process(MBeanServer mServer) {
         List<BufferPoolMXBean> pools = ManagementFactory.getPlatformMXBeans(BufferPoolMXBean.class);
+//        for(BufferPoolMXBean buffer : pools) {
+//            String name =  "pool " + buffer.getName() + " jvm_buffer_";
+//            addCounterMetric(name + "count", buffer.getCount());
+//            addCounterMetric(name + "used", CommonUtil.bytes2MB((buffer.getMemoryUsed())));
+//            addCounterMetric(name + "max", CommonUtil.bytes2MB(buffer.getTotalCapacity()));
+//        }
+
+        long used = 0;
+        long max = 0;
         for(BufferPoolMXBean buffer : pools) {
-            String name =  "pool " + buffer.getName() + " jvm_buffer_";
-            addCounterMetric(name + "count", buffer.getCount());
-            addCounterMetric(name + "used", CommonUtil.bytes2MB((buffer.getMemoryUsed())));
-            addCounterMetric(name + "max", CommonUtil.bytes2MB(buffer.getTotalCapacity()));
+            used += buffer.getMemoryUsed();
+            max += buffer.getTotalCapacity();
         }
+        addCounterMetric("jvm_buffer_used", CommonUtil.bytes2MB(used));
+        addCounterMetric("jvm_buffer_max", CommonUtil.bytes2MB(max));
     }
 
 

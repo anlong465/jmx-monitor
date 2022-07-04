@@ -44,7 +44,7 @@ public class JmxAgentRunnable implements Runnable {
     public void run() {
         while(this.ownerId == JmxAgentRunnable.GLOBAL_OWNER_ID) {
             try {
-                String metrics = JmxMetricCollector.getJVMMetricAsJsonString();
+                String metrics = JmxMetricCollector.getJVMMetricAsJsonString(null);
 //                System.out.println("JMX Metrics: " + selfId + " --> " + metrics);
 
                 Long nextMetricTime = JmxMetricPusher.pushMetrics(jmxServerUrl, auth, selfId, metrics);

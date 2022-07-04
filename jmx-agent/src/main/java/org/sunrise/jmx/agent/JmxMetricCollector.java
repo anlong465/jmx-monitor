@@ -1,9 +1,6 @@
 package org.sunrise.jmx.agent;
 
-import org.sunrise.jmx.metric.JVMClassLoadingCollector;
-import org.sunrise.jmx.metric.JVMGCCollector;
-import org.sunrise.jmx.metric.JVMMemoryCollector;
-import org.sunrise.jmx.metric.JVMThreadCollector;
+import org.sunrise.jmx.metric.*;
 import org.sunrise.jmx.metric.mbean.*;
 
 import javax.management.MBeanServer;
@@ -26,8 +23,8 @@ public class JmxMetricCollector {
         sb.append("}");
     }
 
-    public static String getJVMMetricAsJsonString() {
-        Map<String, Map<String, Number>> metrics = getJVMMetric();
+    public static String getJVMMetricAsJsonString(String procRoot) {
+        Map<String, Map<String, Number>> metrics = getJVMMetric(procRoot);
         if (metrics.isEmpty()) return null;
 
         StringBuffer sb = new StringBuffer("{");
@@ -78,13 +75,17 @@ public class JmxMetricCollector {
             "java.lang.management.BufferPoolMXBean",
             "org.sunrise.jmx.agent.jdk7.JDK7MetricCollector");
 
-    public static Map<String, Map<String, Number>> getJVMMetric() {
+    public static Map<String, Map<String, Number>> getJVMMetric(String procRoot) {
         Map<String, Map<String, Number>> result = new HashMap<String, Map<String, Number>>();
 
         Map<String, Number> guageMap = new HashMap<String, Number>();
         result.put("guage", guageMap);
         Map<String, Number> counterMap = new HashMap<String, Number>();
         result.put("counter", counterMap);
+
+        if (procRoot != null) {
+            NodeMetricCollector.getMetrics(procRoot, guageMap);
+        }
 
         JVMMemoryCollector.getMemoryMetrics(guageMap);
         JVMGCCollector.getGCMetrics(guageMap);
