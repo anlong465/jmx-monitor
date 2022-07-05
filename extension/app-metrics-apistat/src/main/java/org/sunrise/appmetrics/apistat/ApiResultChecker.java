@@ -230,36 +230,34 @@ public class ApiResultChecker {
     private static final ValueGetter generalValueGetter = new ValueGetter();
 
     private static class FieldValueGetter extends ValueGetter {
-        //        private final String fieldName;
         private Field valueField = null;
         public FieldValueGetter(Field valueField) {
             this.valueField = valueField;
         }
 
         public Object getValue(Object result) throws Exception {
-//            if (valueField == null) {
-//                valueField = method.getReturnType().getField(fieldName);
-//            }
-            return valueField.get(result);
+            try {
+                return valueField.get(result);
+            } catch (Throwable ex) {
+                throw new Exception("Field: " + valueField.getDeclaringClass().getCanonicalName() + "." +
+                        valueField.getName() + ", object: " + result.getClass().getCanonicalName(), ex);
+            }
         }
-//        public Class<?> getValueType() {
-//            if (valueField == null) return null;
-//            return valueField.getType();
-//        }
     }
 
     private static class MethodValueGetter extends ValueGetter {
-        //        private final String methodName;
         private Method resultMethod = null;
         public MethodValueGetter(Method resultMethod) {
             this.resultMethod = resultMethod;
         }
 
         public Object getValue(Object result) throws Exception {
-//            if (resultMethod == null) {
-//                resultMethod = method.getReturnType().getMethod(methodName);
-//            }
-            return resultMethod.invoke(result);
+            try {
+                return resultMethod.invoke(result);
+            } catch (Throwable ex) {
+                throw new Exception("Method: " + resultMethod.getDeclaringClass().getCanonicalName() + "." +
+                        resultMethod.getName() + ", object: " + result.getClass().getCanonicalName(), ex);
+            }
         }
 
     }
