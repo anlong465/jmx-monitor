@@ -185,6 +185,7 @@ public abstract class JmxManager implements Runnable {
             nextTime += MetricTimer.METRICS_INTERNAL_MS;
             MetricTimer.setNextMetricTime(nextTime);
             checkJVM();
+            JmxCleaner.check();
 
             long toSleep = nextTime - System.currentTimeMillis();
             if (toSleep > 10) {

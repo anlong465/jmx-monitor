@@ -49,9 +49,10 @@ public class FileCleanHook implements Runnable {
                 File f = new File(path);
                 if (f != null && f.exists()) f.delete();
             } catch (Throwable ex) {
-                System.out.println(ex.getMessage());
+                JmxAgentLogger.info(ex.getMessage());
             }
         }
+        JmxAgentLogger.close();
     }
 
     public static void init() {

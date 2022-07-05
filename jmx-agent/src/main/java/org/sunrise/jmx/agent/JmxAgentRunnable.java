@@ -1,6 +1,7 @@
 package org.sunrise.jmx.agent;
 
 import org.sunrise.jmx.FileCleanHook;
+import org.sunrise.jmx.JmxAgentLogger;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,18 +35,18 @@ public class JmxAgentRunnable implements Runnable {
         this.sleepMS = sleepMS;
         this.auth = "Basic " + auth;
         if (JmxMetricPusher.uploadToSvrCount != 3) JmxMetricPusher.uploadToSvrCount = 3;
-        System.out.println("ownerId: " + ownerId);
-        System.out.println("selfId: " + selfId + ", --> " + this.selfId);
-        System.out.println("sleepMS: " + sleepMS);
-        System.out.println("jmxServerUrl: " + jmxServerUrl);
-        FileCleanHook.init();
+        JmxAgentLogger.info("ownerId: " + ownerId);
+        JmxAgentLogger.info("selfId: " + selfId + ", --> " + this.selfId);
+        JmxAgentLogger.info("sleepMS: " + sleepMS);
+        JmxAgentLogger.info("jmxServerUrl: " + jmxServerUrl);
+        JmxAgentLogger.info("");
     }
 
     public void run() {
         while(this.ownerId == JmxAgentRunnable.GLOBAL_OWNER_ID) {
             try {
                 String metrics = JmxMetricCollector.getJVMMetricAsJsonString(null);
-//                System.out.println("JMX Metrics: " + selfId + " --> " + metrics);
+//                JmxAgentLogger.info("JMX Metrics: " + selfId + " --> " + metrics);
 
                 Long nextMetricTime = JmxMetricPusher.pushMetrics(jmxServerUrl, auth, selfId, metrics);
                 if (nextMetricTime != null) {
@@ -61,6 +62,7 @@ public class JmxAgentRunnable implements Runnable {
                 MetricTimer.resetNextMetricTime();
                 CommonUtil.logException(th);
             }
+            JmxAgentLogger.touch();
 
 //            long toSleep = MetricTimer.getNextMetricCollectTime() - System.currentTimeMillis();
             long toSleep = MetricTimer.getNextMetricTime() - System.currentTimeMillis();
@@ -106,7 +108,7 @@ public class JmxAgentRunnable implements Runnable {
         try {
             FileUtil.writeContent(f, tmpdir + "\n" + javaCmd + "\n" + pid +
                     "\n" + System.getProperty("user.name"));
-            System.out.println("makePidFile: " + f);
+            JmxAgentLogger.info("makePidFile: " + f);
             FileCleanHook.add(f);
         } catch (IOException e) {
             throw new RuntimeException("Failed to prepare pidFile", e);

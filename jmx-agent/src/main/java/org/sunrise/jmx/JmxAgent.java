@@ -8,7 +8,7 @@ public class JmxAgent {
      * @param agentArgs "ownerId sleep-time [jmxServerUrl auth] selfId"
      **/
     public static void agentmain(final String agentArgs) {
-        System.out.println("agentmain: " + agentArgs);
+        JmxAgentLogger.info("agentmain: " + agentArgs);
         String[] ids = agentArgs.split(" ");
 
         Runnable r;

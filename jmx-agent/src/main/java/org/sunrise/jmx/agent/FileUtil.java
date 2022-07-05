@@ -1,5 +1,7 @@
 package org.sunrise.jmx.agent;
 
+import org.sunrise.jmx.JmxAgentLogger;
+
 import java.io.*;
 
 public class FileUtil {
@@ -13,7 +15,7 @@ public class FileUtil {
             bw.write(content);
             bw.flush();
         } catch (FileNotFoundException ex) {
-            System.out.println(ex.toString());
+            JmxAgentLogger.info(ex.toString());
         } finally {
             doClose(bw);
             doClose(fw);

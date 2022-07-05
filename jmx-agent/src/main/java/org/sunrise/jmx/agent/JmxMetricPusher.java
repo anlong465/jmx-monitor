@@ -33,7 +33,7 @@ public class JmxMetricPusher {
     }
 
     private static String uploadToSvr(String jmxServerUrl, String auth, String selfId, String requestBody) throws IOException {
-//        System.out.println("uploadToSvr: " + jmxServerUrl + selfId);
+//        JmxAgentLogger.info("uploadToSvr: " + jmxServerUrl + selfId);
 
         HttpURLConnection connect = (HttpURLConnection) new URL(jmxServerUrl + selfId).openConnection();
         connect.setDoInput(true);
@@ -53,7 +53,7 @@ public class JmxMetricPusher {
         os.close();
 
         int responseCode = connect.getResponseCode();
-//        System.out.println("responseCode=" + responseCode);
+//        JmxAgentLogger.info("responseCode=" + responseCode);
         if (responseCode == 200) { // Success
             BufferedReader brd = new BufferedReader(new InputStreamReader(
                     connect.getInputStream(), "UTF-8"));
@@ -65,7 +65,7 @@ public class JmxMetricPusher {
             brd.close();
             connect.disconnect();
             String result = sb.toString();
-//            System.out.println("response result: " + result);
+//            JmxAgentLogger.info("response result: " + result);
 
             return result;
         }

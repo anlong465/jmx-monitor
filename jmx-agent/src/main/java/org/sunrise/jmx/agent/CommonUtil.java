@@ -1,5 +1,7 @@
 package org.sunrise.jmx.agent;
 
+import org.sunrise.jmx.JmxAgentLogger;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -97,13 +99,13 @@ public class CommonUtil {
         if (tmpdir == null) tmpdir = "/tmp";
         File f = new File(tmpdir, errorFileName);
         if (f.exists()) {
-            System.out.println("Repeated error: " + th.getMessage() + ". Please refer to " + f.getAbsolutePath());
+            JmxAgentLogger.info("Repeated error: " + th.getMessage() + ". Please refer to " + f.getAbsolutePath());
         } else {
             try {
-                System.out.println(exception);
+                JmxAgentLogger.info(exception);
                 FileUtil.writeContent(f, exception);
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                JmxAgentLogger.info(e.getMessage());
             }
         }
     }

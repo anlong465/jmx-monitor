@@ -10,7 +10,7 @@ public class MetricExchanger {
     private File fileToWrite;
     private File fileToRead;
     private MetricExchanger(String root, String fileNameToWrite, String fileNameToRead) {
-//        System.out.println("MetricExchanger --> root: " + root);
+//        JmxAgentLogger.info("MetricExchanger --> root: " + root);
         try {
             fileToWrite = new File(root, fileNameToWrite).getCanonicalFile();
             fileToRead = new File(root, fileNameToRead);

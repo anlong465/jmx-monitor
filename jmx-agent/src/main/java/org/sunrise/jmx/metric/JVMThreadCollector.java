@@ -15,7 +15,7 @@ public class JVMThreadCollector {
 //        NanoTimeWatcher watcher = new NanoTimeWatcher();
         long[] deadlocked = thread.findDeadlockedThreads();
         guageMap.put("jvm_thread_deadlocked", (deadlocked == null) ? 0 : deadlocked.length);
-//        System.out.println("findDeadlockedThreads used time = " + watcher.passedAndReset());
+//        JmxAgentLogger.info("findDeadlockedThreads used time = " + watcher.passedAndReset());
 
         long[] ids = thread.getAllThreadIds();
         ThreadInfo[] infos = thread.getThreadInfo(ids);
@@ -40,7 +40,7 @@ public class JVMThreadCollector {
                 stat.terminated++;
             }
         }
-//        System.out.println("calculateThreadType used time = " + watcher.passed());
+//        JmxAgentLogger.info("calculateThreadType used time = " + watcher.passed());
 
         guageMap.put("jvm_thread_new", stat.created);
         guageMap.put("jvm_thread_running", stat.running);

@@ -1,5 +1,6 @@
 package org.sunrise.jmx.metric.mbean;
 
+import org.sunrise.jmx.JmxAgentLogger;
 import org.sunrise.jmx.agent.CommonUtil;
 import org.sunrise.jmx.metric.JVMGCCollector;
 import org.sunrise.jmx.metric.JVMMemoryCollector;
@@ -103,7 +104,7 @@ public class GCMemoryMetricCollector  extends MBeanMetricCollector {
             if (value instanceof TabularData) {
                 dump(prefix +  "->" + key, (TabularData) value);
             } else {
-                System.out.println(prefix +  "->" + key + "=" + value);
+                JmxAgentLogger.info(prefix +  "->" + key + "=" + value);
             }
         }
     }
@@ -120,20 +121,20 @@ public class GCMemoryMetricCollector  extends MBeanMetricCollector {
         getMemoryFreedByGC(mServer, on, "TotalMemoryFreed");
 
 //        try {
-//            System.out.println("=========" + on.toString());
+//            JmxAgentLogger.info("=========" + on.toString());
 //            MBeanInfo beanInfo = mServer.getMBeanInfo(on);
 //            MBeanAttributeInfo[] attrInfos = beanInfo.getAttributes();
 //            MBeanOperationInfo[] operInfos = beanInfo.getOperations();
 //            if (attrInfos != null) {
 //                for(MBeanAttributeInfo attrInfo : attrInfos) {
 //                    if ("LastGcInfo".equals(attrInfo.getName())) continue;
-//                    System.out.println("**************: \t" + attrInfo.getName() + "="
+//                    JmxAgentLogger.info("**************: \t" + attrInfo.getName() + "="
 //                            + mServer.getAttribute(on, attrInfo.getName()));
 //                }
 //            }
 //            if (operInfos != null) {
 //                for(MBeanOperationInfo operInfo : operInfos) {
-//                    System.out.println("**************: \t" + operInfo.getName());
+//                    JmxAgentLogger.info("**************: \t" + operInfo.getName());
 //                }
 //            }
 //        } catch (Exception e) {

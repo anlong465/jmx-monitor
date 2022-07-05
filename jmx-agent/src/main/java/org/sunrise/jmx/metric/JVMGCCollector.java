@@ -14,7 +14,7 @@ public class JVMGCCollector {
 
         for(GarbageCollectorMXBean gc : gcs) {
             String name = gc.getName();
-//            System.out.println("------------- GC Name: " + name);
+//            JmxAgentLogger.info("------------- GC Name: " + name);
             if (isFullGC(name)) {
                 currentStat.fullGCCount += gc.getCollectionCount();
                 currentStat.fullGCTime += gc.getCollectionTime();

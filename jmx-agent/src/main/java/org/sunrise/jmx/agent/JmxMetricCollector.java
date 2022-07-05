@@ -1,5 +1,6 @@
 package org.sunrise.jmx.agent;
 
+import org.sunrise.jmx.JmxAgentLogger;
 import org.sunrise.jmx.metric.*;
 import org.sunrise.jmx.metric.mbean.*;
 
@@ -105,7 +106,7 @@ public class JmxMetricCollector {
                 tryMBeanCount--;
                 dumpException(e);
             }
-//            System.out.println("MBeanServer.usedTime = " + watcher.passedAndReset());
+//            JmxAgentLogger.info("MBeanServer.usedTime = " + watcher.passedAndReset());
         }
 
         return result;
@@ -114,7 +115,7 @@ public class JmxMetricCollector {
     private static void dumpException(Throwable e) {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw));
-        System.out.println(sw);
+        JmxAgentLogger.info(sw.toString());
     }
 
 }
