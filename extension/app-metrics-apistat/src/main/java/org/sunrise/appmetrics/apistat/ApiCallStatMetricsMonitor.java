@@ -38,24 +38,39 @@ public class ApiCallStatMetricsMonitor extends MetricsMonitor {
         }
     }
 
-
-    public void callEndWithBadMs(long ms) {
-        stat.callEndWithBadMs(ms);
+    public void callEndWithMs(boolean isSuccess, long ms) {
+        if (isSuccess) {
+            stat.callEndWithGoodMs(ms);
+        } else {
+            stat.callEndWithBadMs(ms);
+        }
     }
 
-    public void callEndWithGoodMs(long ms) {
-        stat.callEndWithGoodMs(ms);
-    }
-
-    public void callEndWithMs(Object ret, Throwable th, long ms) {
+    public boolean isCallSuccess(Object ret, Throwable th) {
         try {
             if (th == null && (resultChecker == null || resultChecker.isResultSuccess(ret))) {
-                callEndWithGoodMs(ms);
+                return true;
             } else {
-                callEndWithBadMs(ms);
+                return false;
             }
         } catch (Throwable ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+            return true;
+        }
+    }
+
+    public boolean callEndWithMs(Object ret, Throwable th, long ms) {
+        try {
+            if (th == null && (resultChecker == null || resultChecker.isResultSuccess(ret))) {
+                stat.callEndWithGoodMs(ms);
+                return true;
+            } else {
+                stat.callEndWithBadMs(ms);
+                return false;
+            }
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+            return true;
         }
     }
 
