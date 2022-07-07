@@ -1,0 +1,396 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 3,
+  "iteration": 1657088477689,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "aliasColors": {
+        "失败任务数": "dark-red",
+        "成功任务数": "green",
+        "执行中任务数": "blue",
+        "等待任务数": "yellow"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 21,
+        "x": 0,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "成功任务数",
+          "yaxis": 2
+        },
+        {
+          "alias": "失败任务数",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(proxy_spark_driver_pending{appName=~\"^$appMaster\",appId=~\"^$appId\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "等待任务数",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(proxy_spark_driver_running{appName=~\"^$appMaster\",appId=~\"^$appId\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "执行中任务数",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(proxy_spark_driver_success{appName=~\"^$appMaster\",appId=~\"^$appId\"})",
+          "interval": "",
+          "legendFormat": "成功任务数",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(proxy_spark_driver_failure{appName=~\"^$appMaster\",appId=~\"^$appId\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "失败任务数",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Driver",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:14",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:15",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "失败任务数": "dark-red",
+        "成功任务数": "green",
+        "执行中任务数": "blue",
+        "等待任务数": "yellow"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 21,
+        "x": 0,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "id": 3,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:63",
+          "alias": "成功任务数",
+          "yaxis": 2
+        },
+        {
+          "$$hashKey": "object:64",
+          "alias": "失败任务数",
+          "yaxis": 1
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(proxy_spark_executor_running{appName=~\"^$appMaster\",appId=~\"^$appId\",id=~\"^$executorId\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "执行中任务数",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(proxy_spark_executor_success{appName=~\"^$appMaster\",appId=~\"^$appId\",id=~\"^$executorId\"})",
+          "interval": "",
+          "legendFormat": "成功任务数",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(proxy_spark_executor_failure{appName=~\"^$appMaster\",appId=~\"^$appId\",id=~\"^$executorId\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "失败任务数",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Executor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:14",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:15",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 32,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": [
+            "sparder-ke45-hdp-master"
+          ],
+          "value": [
+            "sparder-ke45-hdp-master"
+          ]
+        },
+        "datasource": null,
+        "definition": "label_values(proxy_spark_driver_success,appName)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "appMaster",
+        "options": [],
+        "query": {
+          "query": "label_values(proxy_spark_driver_success,appName)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": null,
+        "definition": "label_values(proxy_spark_driver_success{appName=~\"^$appMaster\"},appId)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "appId",
+        "options": [],
+        "query": {
+          "query": "label_values(proxy_spark_driver_success{appName=~\"^$appMaster\"},appId)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": null,
+        "definition": "label_values(proxy_spark_executor_success{appName=~\"^$appMaster\",appId=~\"^$appId\"},id)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "executorId",
+        "options": [],
+        "query": {
+          "query": "label_values(proxy_spark_executor_success{appName=~\"^$appMaster\",appId=~\"^$appId\"},id)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Spark Task Monitor",
+  "uid": "nugoiRqnz",
+  "version": 19
+}

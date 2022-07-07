@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 2,
-  "iteration": 1638196079951,
+  "iteration": 1657090072298,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -47,14 +47,14 @@
       "hiddenSeries": false,
       "id": 2,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": true,
-        "current": true,
+        "current": false,
         "max": true,
-        "min": true,
+        "min": false,
         "rightSide": false,
         "show": true,
-        "total": true,
+        "total": false,
         "values": true
       },
       "lines": true,
@@ -70,10 +70,12 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:67",
           "alias": "成功耗时(毫秒)",
           "yaxis": 2
         },
         {
+          "$$hashKey": "object:68",
           "alias": "平均耗时(毫秒)",
           "yaxis": 2
         }
@@ -84,7 +86,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(api_stat_good_count{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "expr": "sum(proxy_apistat_good_count{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "成功次数",
@@ -92,7 +94,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(api_stat_good_ms{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "expr": "sum(proxy_apistat_good_ms{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "成功耗时(毫秒)",
@@ -181,14 +183,14 @@
       "hiddenSeries": false,
       "id": 3,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": true,
-        "current": true,
+        "current": false,
         "max": true,
-        "min": true,
+        "min": false,
         "rightSide": false,
         "show": true,
-        "total": true,
+        "total": false,
         "values": true
       },
       "lines": true,
@@ -204,11 +206,23 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:249",
           "alias": "成功耗时(毫秒)",
           "yaxis": 2
         },
         {
+          "$$hashKey": "object:250",
           "alias": "平均耗时(毫秒)",
+          "yaxis": 2
+        },
+        {
+          "$$hashKey": "object:251",
+          "alias": "失败次数",
+          "yaxis": 2
+        },
+        {
+          "$$hashKey": "object:643",
+          "alias": "运行中次数",
           "yaxis": 2
         }
       ],
@@ -218,7 +232,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(api_stat_good_count{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "expr": "sum(proxy_apistat_good_count{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "成功次数",
@@ -226,18 +240,26 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(api_stat_bad_count{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "expr": "sum(proxy_apistat_bad_count{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "失败次数",
           "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(proxy_apistat_running{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "运行中次数",
+          "refId": "C"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "API调用次数对比：成功 vs 失败",
+      "title": "API调用次数对比：成功 vs 运行中 vs 失败",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -257,7 +279,7 @@
           "$$hashKey": "object:452",
           "format": "short",
           "label": null,
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -266,7 +288,7 @@
           "$$hashKey": "object:453",
           "format": "short",
           "label": null,
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -297,14 +319,14 @@
       "hiddenSeries": false,
       "id": 4,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": true,
-        "current": true,
+        "current": false,
         "max": true,
-        "min": true,
+        "min": false,
         "rightSide": false,
         "show": true,
-        "total": true,
+        "total": false,
         "values": true
       },
       "lines": true,
@@ -320,11 +342,18 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:446",
           "alias": "成功耗时(毫秒)",
           "yaxis": 2
         },
         {
+          "$$hashKey": "object:447",
           "alias": "平均耗时(毫秒)",
+          "yaxis": 2
+        },
+        {
+          "$$hashKey": "object:448",
+          "alias": "失败时间(毫秒)",
           "yaxis": 2
         }
       ],
@@ -334,7 +363,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(api_stat_good_ms{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "expr": "sum(proxy_apistat_good_ms{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "成功时间(毫秒)",
@@ -342,7 +371,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(api_stat_bad_ms{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "expr": "sum(proxy_apistat_bad_ms{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "失败时间(毫秒)",
@@ -394,7 +423,7 @@
       }
     }
   ],
-  "refresh": "10s",
+  "refresh": "30s",
   "schemaVersion": 32,
   "style": "dark",
   "tags": [],
@@ -403,16 +432,16 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
-            "kapQuery"
+            "hdp-master:7070"
           ],
           "value": [
-            "kapQuery"
+            "hdp-master:7070"
           ]
         },
         "datasource": null,
-        "definition": "label_values(api_stat_good_count,apiId)",
+        "definition": "label_values(proxy_apistat_running,id)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -422,7 +451,7 @@
         "name": "apiId",
         "options": [],
         "query": {
-          "query": "label_values(api_stat_good_count,apiId)",
+          "query": "label_values(proxy_apistat_running,id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -434,7 +463,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -443,7 +472,7 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(api_stat_good_count{apiId=~\"^$apiId\"},_node)",
+        "definition": "label_values(proxy_apistat_running{id=~\"^$apiId\"},_node)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -453,7 +482,7 @@
         "name": "node",
         "options": [],
         "query": {
-          "query": "label_values(api_stat_good_count{apiId=~\"^$apiId\"},_node)",
+          "query": "label_values(proxy_apistat_running{id=~\"^$apiId\"},_node)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -468,7 +497,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -477,7 +506,7 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(api_stat_good_count{apiId=~\"^$apiId\",_node=~\"^$node\"},_namespace)",
+        "definition": "label_values(proxy_apistat_running{id=~\"^$apiId\",_node=~\"^$node\"},_namespace)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -487,7 +516,7 @@
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values(api_stat_good_count{apiId=~\"^$apiId\",_node=~\"^$node\"},_namespace)",
+          "query": "label_values(proxy_apistat_running{id=~\"^$apiId\",_node=~\"^$node\"},_namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -511,7 +540,7 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(api_stat_good_count{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\"},_container)",
+        "definition": "label_values(proxy_apistat_running{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\"},_container)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -521,7 +550,7 @@
         "name": "container",
         "options": [],
         "query": {
-          "query": "label_values(api_stat_good_count{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\"},_container)",
+          "query": "label_values(proxy_apistat_running{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\"},_container)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -545,7 +574,7 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(api_stat_good_count{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\"},_pod)",
+        "definition": "label_values(proxy_apistat_running{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\"},_pod)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -555,7 +584,7 @@
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values(api_stat_good_count{apiId=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\"},_pod)",
+          "query": "label_values(proxy_apistat_running{id=~\"^$apiId\",_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\"},_pod)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -570,12 +599,12 @@
     ]
   },
   "time": {
-    "from": "now-24h",
-    "to": "now"
+    "from": "now-50m",
+    "to": "now-20m"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Api Stat",
+  "title": "Api流量监控",
   "uid": "wYqHGLp7k",
-  "version": 12
+  "version": 30
 }

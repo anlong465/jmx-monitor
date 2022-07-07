@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1638196127289,
+  "iteration": 1657088510291,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -36,13 +36,382 @@
         "x": 0,
         "y": 0
       },
-      "id": 58,
+      "id": 158,
       "panels": [],
-      "title": "内存监控",
+      "title": "节点CPU、总内存、硬盘监控",
       "type": "row"
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "iowait": "semi-dark-red"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 166,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeat": null,
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(node_cpu_idle{_node=~\"^$node\"})/sum(node_cpu_total{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "idle",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(node_cpu_user{_node=~\"^$node\"})/sum(node_cpu_total{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "user",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(node_cpu_iowait{_node=~\"^$node\"})/sum(node_cpu_total{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "iowait",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(jvm_mp_afterGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$nonheapPoolName\"})",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "GC后内存",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "CPU",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "iowait": "semi-dark-red",
+        "已用内存": "semi-dark-yellow",
+        "已用内存%": "super-light-orange",
+        "空闲内存": "dark-green",
+        "空闲内存%": "light-green",
+        "缓冲缓存": "semi-dark-red"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 9,
+        "x": 8,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 195,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(node_mem_buff_cache{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "缓冲缓存",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(node_mem_total{_node=~\"^$node\"}) - sum(node_mem_free{_node=~\"^$node\"}) - sum(node_mem_buff_cache{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已用内存",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(node_mem_free{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "空闲内存",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "节点内存（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "iowait": "semi-dark-red",
+        "已用内存": "semi-dark-orange",
+        "已用内存%": "super-light-orange",
+        "硬盘读": "dark-orange",
+        "空闲内存": "light-green",
+        "空闲内存%": "light-green"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 17,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 180,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "(sum(node_disk_writeHalfKB{_node=~\"^$node\",disk=~\"^$disk\"})*500)/sum(node_disk_writeMs{_node=~\"^$node\",disk=~\"^$disk\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "硬盘写",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(node_disk_readHalfKB{_node=~\"^$node\",disk=~\"^$disk\"})*500)/sum(node_disk_readMs{_node=~\"^$node\",disk=~\"^$disk\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "硬盘读",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "硬盘IO（单位：KB/s）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 10,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 58,
+      "panels": [],
+      "title": "JVM内存监控",
+      "type": "row"
+    },
+    {
+      "aliasColors": {
+        "已分配内存": "super-light-yellow",
+        "已用内存": "semi-dark-orange"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -54,19 +423,19 @@
         "h": 4,
         "w": 22,
         "x": 1,
-        "y": 1
+        "y": 8
       },
       "hiddenSeries": false,
       "id": 2,
       "legend": {
-        "avg": false,
+        "avg": true,
         "current": false,
         "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -110,7 +479,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "总内存（单位：MB）",
+      "title": "JVM总内存（单位：MB）",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -160,17 +529,17 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 5,
-        "w": 12,
+        "w": 8,
         "x": 0,
-        "y": 5
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 5,
       "legend": {
         "avg": true,
         "current": false,
-        "max": true,
-        "min": true,
+        "max": false,
+        "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
@@ -193,24 +562,27 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(jvm_heap_max_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "最大内存",
+          "legendFormat": "最大",
           "refId": "A"
         },
         {
+          "exemplar": true,
           "expr": "sum(jvm_heap_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "已分配内存",
+          "legendFormat": "已分配",
           "refId": "B"
         },
         {
+          "exemplar": true,
           "expr": "sum(jvm_heap_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "已用内存",
+          "legendFormat": "已用",
           "refId": "C"
         },
         {
@@ -282,21 +654,21 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 5,
-        "w": 12,
-        "x": 12,
-        "y": 5
+        "w": 8,
+        "x": 8,
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 3,
       "legend": {
-        "avg": false,
+        "avg": true,
         "current": false,
         "max": false,
         "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -315,24 +687,27 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(jvm_nonheap_max_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "最大内存",
+          "legendFormat": "最大",
           "refId": "A"
         },
         {
+          "exemplar": true,
           "expr": "sum(jvm_nonheap_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "已分配内存",
+          "legendFormat": "已分配",
           "refId": "B"
         },
         {
+          "exemplar": true,
           "expr": "sum(jvm_nonheap_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "已用内存",
+          "legendFormat": "已用",
           "refId": "C"
         },
         {
@@ -394,13 +769,116 @@
       }
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Direct Memory",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "hiddenSeries": false,
+      "id": 202,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_buffer_max{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已分配",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_buffer_used{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "使用中",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "直接内存（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 17
       },
       "id": 86,
       "panels": [],
@@ -421,14 +899,14 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 11
+        "y": 18
       },
       "hiddenSeries": false,
       "id": 150,
       "legend": {
         "alignAsTable": false,
         "avg": true,
-        "current": true,
+        "current": false,
         "max": false,
         "min": false,
         "show": true,
@@ -448,6 +926,7 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:302",
           "alias": "GC次数",
           "yaxis": 2
         }
@@ -534,14 +1013,14 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 11
+        "y": 18
       },
       "hiddenSeries": false,
       "id": 143,
       "legend": {
         "alignAsTable": false,
         "avg": true,
-        "current": true,
+        "current": false,
         "max": false,
         "min": false,
         "show": true,
@@ -641,7 +1120,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 25
       },
       "id": 118,
       "panels": [
@@ -773,7 +1252,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 26
       },
       "id": 66,
       "panels": [],
@@ -792,7 +1271,7 @@
         "h": 5,
         "w": 12,
         "x": 0,
-        "y": 20
+        "y": 27
       },
       "hiddenSeries": false,
       "id": 6,
@@ -907,7 +1386,7 @@
         "h": 5,
         "w": 12,
         "x": 12,
-        "y": 20
+        "y": 27
       },
       "hiddenSeries": false,
       "id": 8,
@@ -1027,7 +1506,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 32
       },
       "id": 102,
       "panels": [],
@@ -1036,7 +1515,7 @@
     },
     {
       "aliasColors": {},
-      "bars": true,
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
@@ -1047,16 +1526,18 @@
         "h": 5,
         "w": 16,
         "x": 4,
-        "y": 26
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 35,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
+        "hideEmpty": true,
         "max": false,
         "min": false,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": false
@@ -1065,16 +1546,22 @@
       "linewidth": 1,
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "8.2.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:281",
+          "alias": "已卸载的类数目",
+          "yaxis": 2
+        }
+      ],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
@@ -1123,7 +1610,7 @@
         },
         {
           "$$hashKey": "object:453",
-          "format": "Volume",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1143,7 +1630,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 38
       },
       "id": 136,
       "panels": [],
@@ -1163,18 +1650,18 @@
         "h": 5,
         "w": 8,
         "x": 0,
-        "y": 32
+        "y": 39
       },
       "hiddenSeries": false,
       "id": 9,
       "legend": {
-        "avg": false,
+        "avg": true,
         "current": false,
         "max": false,
         "min": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -1196,32 +1683,20 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(jvm_heap_mp_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$heapPoolName\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "已分配内存",
+          "legendFormat": "已分配",
           "refId": "B"
         },
         {
-          "expr": "sum(jvm_mp_beforeGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$heapPoolName\"})",
-          "hide": true,
-          "interval": "",
-          "legendFormat": "GC前内存",
-          "refId": "A"
-        },
-        {
+          "exemplar": true,
           "expr": "sum(jvm_heap_mp_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$heapPoolName\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "已用内存",
+          "legendFormat": "使用中",
           "refId": "C"
-        },
-        {
-          "expr": "sum(jvm_mp_afterGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$heapPoolName\"})",
-          "hide": true,
-          "interval": "",
-          "legendFormat": "GC后内存",
-          "refId": "D"
         }
       ],
       "thresholds": [],
@@ -1247,7 +1722,7 @@
           "$$hashKey": "object:452",
           "format": "short",
           "label": null,
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -1274,7 +1749,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 49
       },
       "id": 134,
       "panels": [],
@@ -1294,18 +1769,18 @@
         "h": 5,
         "w": 8,
         "x": 0,
-        "y": 48
+        "y": 50
       },
       "hiddenSeries": false,
       "id": 12,
       "legend": {
-        "avg": false,
+        "avg": true,
         "current": false,
         "max": false,
         "min": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -1327,32 +1802,20 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(jvm_nonheap_mp_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$nonheapPoolName\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "已分配内存",
+          "legendFormat": "已分配",
           "refId": "B"
         },
         {
+          "exemplar": true,
           "expr": "sum(jvm_nonheap_mp_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$nonheapPoolName\"})",
           "hide": false,
           "interval": "",
-          "legendFormat": "已用内存",
+          "legendFormat": "使用中",
           "refId": "C"
-        },
-        {
-          "expr": "sum(jvm_mp_beforeGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$nonheapPoolName\"})",
-          "hide": true,
-          "interval": "",
-          "legendFormat": "GC前内存",
-          "refId": "A"
-        },
-        {
-          "expr": "sum(jvm_mp_afterGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$nonheapPoolName\"})",
-          "hide": true,
-          "interval": "",
-          "legendFormat": "GC后内存",
-          "refId": "D"
         }
       ],
       "thresholds": [],
@@ -1378,7 +1841,7 @@
           "$$hashKey": "object:452",
           "format": "short",
           "label": null,
-          "logBase": 10,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
@@ -1408,12 +1871,12 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
-            "All"
+            "hdp-master"
           ],
           "value": [
-            "$__all"
+            "hdp-master"
           ]
         },
         "datasource": "Prometheus",
@@ -1442,7 +1905,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -1642,6 +2105,40 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(node_disk_readMs{_node=~\"^$node\"},disk)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "硬盘",
+        "multi": true,
+        "name": "disk",
+        "options": [],
+        "query": {
+          "query": "label_values(node_disk_readMs{_node=~\"^$node\"},disk)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -1653,5 +2150,5 @@
   "timezone": "",
   "title": "JVM Monitor",
   "uid": "Wobm93Mnz",
-  "version": 4
+  "version": 59
 }
