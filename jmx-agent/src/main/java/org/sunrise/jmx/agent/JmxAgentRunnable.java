@@ -32,6 +32,8 @@ public class JmxAgentRunnable implements Runnable {
             this.selfId = selfId;
         }
 
+        FileCleanHook.init();
+
         this.sleepMS = sleepMS;
         this.auth = "Basic " + auth;
         if (JmxMetricPusher.uploadToSvrCount != 3) JmxMetricPusher.uploadToSvrCount = 3;

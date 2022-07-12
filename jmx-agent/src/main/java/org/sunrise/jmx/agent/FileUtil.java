@@ -10,7 +10,7 @@ public class FileUtil {
         BufferedWriter bw = null;
 
         try {
-            fw = new FileWriter(fileToWrite);
+            fw = new FileWriter(fileToWrite, true);
             bw = new BufferedWriter(fw);
             bw.write(content);
             bw.flush();
@@ -25,6 +25,14 @@ public class FileUtil {
     public static String readContent(File fileToRead) throws IOException {
         if (!fileToRead.exists()) return null;
 
+        StringBuffer sb = new StringBuffer();
+        readContent(fileToRead, sb);
+        return sb.toString();
+    }
+
+    public static void readContent(File fileToRead, StringBuffer sb) throws IOException {
+        if (!fileToRead.exists()) return;
+
         FileReader fr = null;
         BufferedReader br = null;
 
@@ -32,12 +40,10 @@ public class FileUtil {
             fr = new FileReader(fileToRead);
             br = new BufferedReader(fr);
 
-            StringBuffer sb = new StringBuffer();
             String line;
             while((line=br.readLine()) != null) {
                 sb.append(line).append('\n');
             }
-            return sb.toString();
         } finally {
             doClose(br);
             doClose(fr);

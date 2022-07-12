@@ -25,7 +25,7 @@ public class JmxCleaner {
                     if (name.endsWith(".out")) {
                         if (kid.lastModified() < oldMillis) {
                             try {
-                                Integer.parseInt(name.substring(0, name.length()-4));
+                                Double.parseDouble(name.substring(0, name.length()-4));
                                 kid.delete();
                             } catch (Throwable ex){}
                         }

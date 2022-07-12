@@ -55,7 +55,11 @@ public class FileCleanHook implements Runnable {
         JmxAgentLogger.close();
     }
 
-    public static void init() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new FileCleanHook()));
+    private static FileCleanHook hook = null;
+    public static synchronized void init() {
+        if (hook == null) {
+            hook = new FileCleanHook();
+            Runtime.getRuntime().addShutdownHook(new Thread(hook));
+        }
     }
 }
