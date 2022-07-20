@@ -1,13 +1,12 @@
 package org.sunrise.appmetrics.apistat;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ApiCallStat {
     protected final Counter good = new Counter();
     protected final Counter bad = new Counter();
 
     protected int ttl = 10;
-    protected final AtomicInteger runningNum = new AtomicInteger(0);
+    protected final AtomicIntegerExt runningNum = new AtomicIntegerExt(0);
 
     public void callBegin() {
         runningNum.incrementAndGet();

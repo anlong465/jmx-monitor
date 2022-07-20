@@ -1,0 +1,2154 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "iteration": 1657088510291,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 158,
+      "panels": [],
+      "title": "节点CPU、总内存、硬盘监控",
+      "type": "row"
+    },
+    {
+      "aliasColors": {
+        "iowait": "semi-dark-red"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 166,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeat": null,
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(node_cpu_idle{_node=~\"^$node\"})/sum(node_cpu_total{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "idle",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(node_cpu_user{_node=~\"^$node\"})/sum(node_cpu_total{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "user",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(node_cpu_iowait{_node=~\"^$node\"})/sum(node_cpu_total{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "iowait",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(jvm_mp_afterGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$nonheapPoolName\"})",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "GC后内存",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "CPU",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "iowait": "semi-dark-red",
+        "已用内存": "semi-dark-yellow",
+        "已用内存%": "super-light-orange",
+        "空闲内存": "dark-green",
+        "空闲内存%": "light-green",
+        "缓冲缓存": "semi-dark-red"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 9,
+        "x": 8,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 195,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(node_mem_buff_cache{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "缓冲缓存",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(node_mem_total{_node=~\"^$node\"}) - sum(node_mem_free{_node=~\"^$node\"}) - sum(node_mem_buff_cache{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已用内存",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(node_mem_free{_node=~\"^$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "空闲内存",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "节点内存（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "iowait": "semi-dark-red",
+        "已用内存": "semi-dark-orange",
+        "已用内存%": "super-light-orange",
+        "硬盘读": "dark-orange",
+        "空闲内存": "light-green",
+        "空闲内存%": "light-green"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 17,
+        "y": 1
+      },
+      "hiddenSeries": false,
+      "id": 180,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "(sum(node_disk_writeHalfKB{_node=~\"^$node\",disk=~\"^$disk\"})*500)/sum(node_disk_writeMs{_node=~\"^$node\",disk=~\"^$disk\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "硬盘写",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(node_disk_readHalfKB{_node=~\"^$node\",disk=~\"^$disk\"})*500)/sum(node_disk_readMs{_node=~\"^$node\",disk=~\"^$disk\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "硬盘读",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "硬盘IO（单位：KB/s）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 10,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 58,
+      "panels": [],
+      "title": "JVM内存监控",
+      "type": "row"
+    },
+    {
+      "aliasColors": {
+        "已分配内存": "super-light-yellow",
+        "已用内存": "semi-dark-orange"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 4,
+        "w": 22,
+        "x": 1,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(jvm_max_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "最大内存",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(jvm_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已分配内存",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(jvm_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已用内存",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "JVM总内存（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 10,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 12
+      },
+      "hiddenSeries": false,
+      "id": 5,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_heap_max_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "最大",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_heap_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已分配",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_heap_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已用",
+          "refId": "C"
+        },
+        {
+          "expr": "sum(jvm_heap_mp_beforeGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "GC前内存",
+          "refId": "D"
+        },
+        {
+          "expr": "sum(jvm_heap_mp_afterGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "GC后内存",
+          "refId": "E"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Heap堆内存（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 10,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 8,
+        "y": 12
+      },
+      "hiddenSeries": false,
+      "id": 3,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_nonheap_max_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "最大",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_nonheap_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已分配",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_nonheap_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已用",
+          "refId": "C"
+        },
+        {
+          "expr": "sum(jvm_nonheap_mp_beforeGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "GC前内存",
+          "refId": "D"
+        },
+        {
+          "expr": "sum(jvm_nonheap_mp_afterGc_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "GC后内存",
+          "refId": "E"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "堆外内存（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 10,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Direct Memory",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "hiddenSeries": false,
+      "id": 202,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_buffer_max{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已分配",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_buffer_used{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "使用中",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "直接内存（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 86,
+      "panels": [],
+      "title": "GC监控",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "decimals": null,
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 150,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:302",
+          "alias": "GC次数",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(jvm_gc_full_time_ms{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "GC耗时(毫秒)",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(jvm_gc_full_count{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "GC次数",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(jvm_gc_full_memory_freed{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "释放内存（MB）",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Full GC",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": "",
+          "logBase": 10,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 143,
+      "legend": {
+        "alignAsTable": false,
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "GC次数",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(jvm_gc_minor_time_ms{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "GC耗时(毫秒)",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(jvm_gc_minor_count{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "GC次数",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(jvm_gc_minor_memory_freed{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "释放内存（MB）",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Minor GC",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 10,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 118,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "description": "",
+          "fill": 1,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 5,
+            "w": 24,
+            "x": 0,
+            "y": 19
+          },
+          "hiddenSeries": false,
+          "id": 42,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "maxPerRow": 3,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "8.2.4",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "repeat": "dsJndiName",
+          "repeatDirection": "h",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(jvm_ds_max_size{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",jndi=\"$dsJndiName\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "最大连接数",
+              "refId": "A"
+            },
+            {
+              "expr": "sum(jvm_ds_idle{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",jndi=\"$dsJndiName\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "空闲连接数",
+              "refId": "B"
+            },
+            {
+              "expr": "sum(jvm_ds_used{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",jndi=\"$dsJndiName\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "活动连接数",
+              "refId": "C"
+            },
+            {
+              "expr": "sum(jvm_ds_waiting{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",jndi=\"$dsJndiName\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "连接等待数",
+              "refId": "D"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "数据源 $dsJndiName",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "$$hashKey": "object:452",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "$$hashKey": "object:453",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "title": "数据源监控",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 66,
+      "panels": [],
+      "title": "线程监控",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 27
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(jvm_thread_peak_total{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "线程数峰值",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(jvm_thread_active_total{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "活动线程数",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(jvm_thread_daemon_total{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "守护线程数",
+          "refId": "C"
+        },
+        {
+          "expr": "sum(jvm_thread_deadlocked{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "死锁线程数",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "线程汇总",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 27
+      },
+      "hiddenSeries": false,
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": false
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(jvm_thread_running{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "运行态",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(jvm_thread_waiting{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "等待态",
+          "refId": "D"
+        },
+        {
+          "expr": "sum(jvm_thread_new{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "新建态",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(jvm_thread_blocked{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "阻塞态",
+          "refId": "C"
+        },
+        {
+          "expr": "sum(jvm_thread_terminated{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "停止态",
+          "refId": "E"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "线程分类",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1117",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1118",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "id": 102,
+      "panels": [],
+      "title": "Class类加载、卸载监控",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 16,
+        "x": 4,
+        "y": 33
+      },
+      "hiddenSeries": false,
+      "id": 35,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": true,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": false
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:281",
+          "alias": "已卸载的类数目",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(jvm_class_active_total{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "未卸载的类数目",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(jvm_class_unloaded_total{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已卸载的类数目",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Class类加载汇总",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "id": 136,
+      "panels": [],
+      "title": "Heap堆内存池监控",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 39
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "maxPerRow": 3,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeat": "heapPoolName",
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_heap_mp_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$heapPoolName\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已分配",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_heap_mp_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$heapPoolName\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "使用中",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Heap堆 $heapPoolName 内存池（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 49
+      },
+      "id": 134,
+      "panels": [],
+      "title": "堆外内存池监控",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 50
+      },
+      "hiddenSeries": false,
+      "id": 12,
+      "legend": {
+        "avg": true,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "maxPerRow": 3,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeat": "nonheapPoolName",
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_nonheap_mp_committed_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$nonheapPoolName\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "已分配",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(jvm_nonheap_mp_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\",poolName=\"$nonheapPoolName\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "使用中",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "堆外 $nonheapPoolName 内存池（单位：MB）",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:452",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:453",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 32,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": [
+            "hdp-master"
+          ],
+          "value": [
+            "hdp-master"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(jvm_used_mb,_node)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "节点",
+        "multi": true,
+        "name": "node",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_used_mb,_node)",
+          "refId": "Prometheus-node-Variable-Query"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(jvm_used_mb{_node=~\"^$node\"},_namespace)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "用户空间",
+        "multi": true,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_used_mb{_node=~\"^$node\"},_namespace)",
+          "refId": "Prometheus-namespace-Variable-Query"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(jvm_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\"},_container)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "应用",
+        "multi": true,
+        "name": "container",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\"},_container)",
+          "refId": "Prometheus-container-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(jvm_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\"},_pod)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "pid",
+        "multi": true,
+        "name": "pod",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\"},_pod)",
+          "refId": "Prometheus-pod-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(jvm_heap_mp_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"}, poolName)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "heapPoolName",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_heap_mp_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"}, poolName)",
+          "refId": "Prometheus-heapPoolName-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(jvm_nonheap_mp_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"}, poolName)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "nonheapPoolName",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_nonheap_mp_used_mb{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"}, poolName)",
+          "refId": "Prometheus-nonheapPoolName-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(jvm_ds_idle{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"}, jndi)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "dsJndiName",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_ds_idle{_node=~\"^$node\",_namespace=~\"^$namespace\",_container=~\"^$container\",_pod=~\"^$pod\"}, jndi)",
+          "refId": "Prometheus-dsJndiName-Variable-Query"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(node_disk_readMs{_node=~\"^$node\"},disk)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "硬盘",
+        "multi": true,
+        "name": "disk",
+        "options": [],
+        "query": {
+          "query": "label_values(node_disk_readMs{_node=~\"^$node\"},disk)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "JVM Monitor",
+  "uid": "Wobm93Mnz",
+  "version": 59
+}

@@ -54,11 +54,13 @@ public class JmxAgentLogger {
     public static void touch() {
         if (bw != null) {
             try {
+                if (loggerFile != null) {
+                    loggerFile.setLastModified(System.currentTimeMillis());
+                }
                 bw.flush();
-            } catch (IOException e) {
+            } catch (Exception e) {
             }
         }
-        loggerFile.setLastModified(System.currentTimeMillis());
     }
 
     public static void close() {
@@ -73,17 +75,29 @@ public class JmxAgentLogger {
             } catch (IOException e) {
             }
         }
-        if (duration < 10000) {
-            StringBuffer sb = new StringBuffer("\n\n");
-
-            String fileName = loggerFile.getName();
-            sb.append(fileName).append(":\n");
+        if (duration < 1000000) {
             try {
+                StringBuffer sb = new StringBuffer("\n\n");
+
+                String fileName = loggerFile.getName();
+                sb.append(fileName).append(":\n");
+
                 FileUtil.readContent(loggerFile, sb);
                 loggerFile.delete();
+
                 File summary = new File(loggerFile.getParentFile(), fileName.substring(0, 8) + ".out");
+                boolean newFile = false;
+                if (!summary.exists()) {
+                    newFile = true;
+                    summary.setWritable(true, false);
+                }
                 FileUtil.writeContent(summary, sb.toString());
-            } catch (IOException e) {
+                if (newFile) {
+                    try {
+                        Runtime.getRuntime().exec("chmod a+w " + summary.getAbsolutePath());
+                    } catch (Throwable th) {}
+                }
+            } catch (Exception e) {
             }
         }
     }
