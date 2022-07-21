@@ -14,8 +14,8 @@ public class FileUtil {
             bw = new BufferedWriter(fw);
             bw.write(content);
             bw.flush();
-//        } catch (FileNotFoundException ex) {
-//            JmxAgentLogger.info(ex.toString());
+        } catch (IOException ex) {
+            JmxAgentLogger.info("org.sunrise.jmx.agent.FileUtil.writeContent(): " + ex.toString());
         } finally {
             doClose(bw);
             doClose(fw);
