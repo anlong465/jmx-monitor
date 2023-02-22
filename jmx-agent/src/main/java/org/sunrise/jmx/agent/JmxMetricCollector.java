@@ -61,8 +61,8 @@ public class JmxMetricCollector {
 
             try {
                 Class clazz = Class.forName(metricCollectorClassName);
-                Constructor<?> constructor = clazz.getDeclaredConstructor(null);
-                return (MBeanMetricCollector) constructor.newInstance(null);
+                Constructor<?> constructor = clazz.getDeclaredConstructor();
+                return (MBeanMetricCollector) constructor.newInstance();
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -71,7 +71,7 @@ public class JmxMetricCollector {
 
         return null;
     }
-    private static MBeanMetricCollector jdk7MetricCollector = getJDKMetricCollector(
+    private static final MBeanMetricCollector jdk7MetricCollector = getJDKMetricCollector(
             "java.lang.management.BufferPoolMXBean",
             "org.sunrise.jmx.agent.jdk7.JDK7MetricCollector");
 

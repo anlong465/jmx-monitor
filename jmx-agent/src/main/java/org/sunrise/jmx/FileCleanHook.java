@@ -47,7 +47,7 @@ public class FileCleanHook implements Runnable {
         for(String path : toDeleteFiles) {
             try {
                 File f = new File(path);
-                if (f != null && f.exists()) f.delete();
+                if (f.exists()) f.delete();
             } catch (Throwable ex) {
                 JmxAgentLogger.info(ex.getMessage());
             }
