@@ -16,9 +16,13 @@ import java.util.Map;
 public class JmxMetricCollector {
     private static void mapToJson(Map<String, Number> metrics, StringBuffer sb) {
         sb.append("{");
-        int i = 0;
+        boolean nonFirst = false;
         for(String key : metrics.keySet()) {
-            if ((i++) != 0) sb.append(",");
+            if (nonFirst) {
+                sb.append(",");
+            } else {
+                nonFirst = true;
+            }
             sb.append("\"").append(key).append("\":").append(metrics.get(key));
         }
         sb.append("}");
@@ -60,14 +64,13 @@ public class JmxMetricCollector {
             Class.forName(jdkClassName);
 
             try {
-                Class clazz = Class.forName(metricCollectorClassName);
+                Class<?> clazz = Class.forName(metricCollectorClassName);
                 Constructor<?> constructor = clazz.getDeclaredConstructor();
                 return (MBeanMetricCollector) constructor.newInstance();
             } catch (Throwable e) {
                 e.printStackTrace();
             }
-        } catch (ClassNotFoundException e) {
-        }
+        } catch (ClassNotFoundException e) {}
 
         return null;
     }
