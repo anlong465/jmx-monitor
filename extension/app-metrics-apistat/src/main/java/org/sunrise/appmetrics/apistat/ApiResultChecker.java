@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class ApiResultChecker {
-    protected ValueGetter getter = null;
-    protected ValueChecker checker = null;
+    protected ValueGetter getter;
+    protected ValueChecker checker;
 
     public ApiResultChecker(Method method, String checkSuccessRule) throws NoSuchFieldException, NoSuchMethodException, ClassNotFoundException {
         this(method.getReturnType(), checkSuccessRule);
@@ -56,10 +56,10 @@ public class ApiResultChecker {
                 toCompareStr = checkSuccessRule.substring(pos + 1);
                 valueGetterStr = checkSuccessRule.substring(0, pos);
             } else if (checkSuccessRule.endsWith("is null")) {
-                this.checker = new NullValueChecker();
+                this.checker = new NullValueChecker<Object>();
                 valueGetterStr = checkSuccessRule.substring(0, checkSuccessRule.length() - 7);
             } else if (checkSuccessRule.endsWith("is not null")) {
-                this.checker = new NotNullValueChecker();
+                this.checker = new NotNullValueChecker<Object>();
                 valueGetterStr = checkSuccessRule.substring(0, checkSuccessRule.length() - 11);
             } else {
                 throw new RuntimeException("Invalid check success rule: " + checkSuccessRule);
@@ -134,8 +134,8 @@ public class ApiResultChecker {
         return checker.isSuccess(getter.getValue(result));
     }
 
-    private static interface ValueChecker<T> {
-        public boolean isSuccess(T value) ;
+    private interface ValueChecker<T> {
+        boolean isSuccess(T value) ;
     }
 
     private static class NullValueChecker<T> implements ValueChecker<T> {
@@ -167,8 +167,8 @@ public class ApiResultChecker {
         }
     }
 
-    private static interface ComparedResultCheckCase {
-        public boolean isSuccess(int comparedResult) ;
+    private interface ComparedResultCheckCase {
+        boolean isSuccess(int comparedResult) ;
     }
 
     private static class ComparedResultEqualCheckCase implements ComparedResultCheckCase {
@@ -230,7 +230,7 @@ public class ApiResultChecker {
     private static final ValueGetter generalValueGetter = new ValueGetter();
 
     private static class FieldValueGetter extends ValueGetter {
-        private Field valueField = null;
+        private final Field valueField;
         public FieldValueGetter(Field valueField) {
             this.valueField = valueField;
         }
@@ -246,7 +246,7 @@ public class ApiResultChecker {
     }
 
     private static class MethodValueGetter extends ValueGetter {
-        private Method resultMethod = null;
+        private final Method resultMethod;
         public MethodValueGetter(Method resultMethod) {
             this.resultMethod = resultMethod;
         }
